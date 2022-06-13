@@ -26,19 +26,14 @@ class BoardController {
     async findBoardById(req, res) {
         try {
             const { id } = req.params;
-            const { rows } = await db.query(`SELECT 
-                                      board_id,
-                                      name, 
-                                      color,
-                                      description,
-                                      to_char(create_at, 'yyyy-MM-dd') as create_at
-                                    FROM "TrelloSchema"."board" WHERE board_id = $1`,
+            const { rows } = await db.query(`SELECT *
+            FROM "TrelloSchema"."board" JOIN "TrelloSchema"."card" ON "TrelloSchema"."board"."board_id"="TrelloSchema"."card"."board_id" WHERE "TrelloSchema"."board"."board_id" = $1  `,
                 [id]
             );
             if (!rows.length) {
                 throw 'board_not_found';
             }
-            res.status(200).send(rows[0]);
+            res.status(200).send(rows);
         } catch (error) {
             console.error('findBoardById', error);
             if (error == 'board_not_found') {
