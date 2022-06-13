@@ -18,3 +18,13 @@ CREATE TABLE IF NOT EXISTS "TrelloSchema"."card"
     "due_date" timestamp without time zone NOT NULL,
     labels text NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS "TrelloSchema".boardcard
+(
+	id SERIAL NOT NULL,
+    board_id integer NOT NULL,
+	card_id integer NOT NULL,
+	FOREIGN KEY (board_id) REFERENCES board (board_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE,
+	FOREIGN KEY (card_id) REFERENCES card (card_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE
+    
+);
