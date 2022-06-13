@@ -1,10 +1,12 @@
 const Router = require('express').Router;
 const router = new Router()
 const controller = require("../controllers/boardController")
+const roleMiddleware = require('../middlewares/roles-middleware')
 
-router.post('/createboard', controller.createBoard);
+router.post('/createboard', roleMiddleware(["admin"]), controller.createBoard);
+router.post('/cardsinboard', controller.cardsInBoard);
 router.get('/board/:id', controller.findBoardById);
-router.put('/updateboard/:id', controller.updateBoardById)
-router.delete('/deleteboard/:id', controller.deleteBoardById);
+router.put('/updateboard/:id', roleMiddleware(["admin"]), controller.updateBoardById)
+router.delete('/deleteboard/:id', roleMiddleware(["admin"]), controller.deleteBoardById);
 
 module.exports = router;
