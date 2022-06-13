@@ -23,29 +23,6 @@ class BoardController {
 
     };
 
-    async cardsInBoard(req,res) {
-        try {
-            const { board_id, card_id } = req.body
-            const { rows } = await db.query(
-                `INSERT INTO "TrelloSchema"."boardcard" ( board_id, card_id ) VALUES ($1, $2)`,
-                 [ board_id, card_id]
-
-            );
-            res.status(201).send({
-                message: "Card added in board successfully!",
-                body: {
-                    board: { board_id, card_id },
-                },
-            });
-        } catch (error) {
-            console.error('addCoardInBoard', error);
-            res.status(500).send({
-                message: "Unexpected error"
-            });
-        }
-
-    };
-
     async findBoardById(req, res) {
         try {
             const { id } = req.params;
