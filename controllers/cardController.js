@@ -3,15 +3,15 @@ const db = require("../db");
 class CardController {
     async createCard(req, res) {
         try {
-            const { name, description, create_at, status, due_date, labels } = req.body
+            const { board_id, name, description, create_at, status, due_date, labels } = req.body
             const { rows } = await db.query(
-                `INSERT INTO "TrelloSchema"."card" ( name, description, create_at, status, due_date, labels) VALUES ($1, $2, $3, $4, $5, $6)`,
-                [name, description, create_at, status, due_date, labels]
+                `INSERT INTO "TrelloSchema"."card" ( board_id, name, description, create_at, status, due_date, labels) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                [board_id, name, description, create_at, status, due_date, labels]
             );
             res.status(201).send({
                 message: "Card added successfully!",
                 body: {
-                    card: { name, description, create_at, status, due_date, labels },
+                    card: { board_id, name, description, create_at, status, due_date, labels },
                 },
             });
         } catch (error) {
