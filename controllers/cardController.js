@@ -28,6 +28,7 @@ class CardController {
             const { id } = req.params;
             const { rows } = await db.query(`SELECT 
                                       card_id,
+                                      board_id,
                                       name, 
                                       description,
                                       to_char(create_at, 'yyyy-MM-dd') as create_at,
@@ -58,16 +59,17 @@ class CardController {
     async updateCardById(req, res) {
         try {
             const { id } = req.params;
-            const { name, description, create_at, status, due_date, labels } = req.body;
+            const { board_id, name, description, create_at, status, due_date, labels } = req.body;
             const { rows } = await db.query(`UPDATE "TrelloSchema"."card" 
-                                          SET name = $1, 
-                                          description = $2, 
-                                          create_at = $3, 
-                                          status = $4, 
-                                          due_date = $5,
-                                          labels = $6
-                                          WHERE card_id = $7`,
-                [name, description, create_at, status, due_date, labels, id]
+                                          SET board_id =$1,
+                                          name = $2, 
+                                          description = $3, 
+                                          create_at = $4, 
+                                          status = $5, 
+                                          due_date = $6,
+                                          labels = $7
+                                          WHERE card_id = $8`,
+                [board_id, name, description, create_at, status, due_date, labels, id]
             );
             res.status(200).send({ message: "Card Updated Successfully!" });
         } catch (error) {
