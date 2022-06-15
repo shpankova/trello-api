@@ -1,15 +1,17 @@
 const boardService = require('../service/board-service')
 const { boardValidation } = require('../validation/board-validation')
+const ApiError = require('../exceptions/api-error');
+
 
 class BoardController {
     async createBoard(req, res, next) {
         try {
+            const { name, color, description, board_id } = req.body
             const {error} = boardValidation(req.body)
             if (error){
-                return res.status(400).json({message: error.details[0].message})
+                return next(ApiError.BadRequest('Not valid data', error.details[0].message))
             } 
-            const { name, color, description } = req.body
-            const board = await boardService.createBoard(name, color, description)
+            const board = await boardService.createBoard(name, color, description, board_id)
             res.status(201).send({
                 message: "Board added successfully!",
                 body: {
@@ -36,7 +38,7 @@ class BoardController {
         try {
             const {error} = boardValidation(req.body)
             if (error){
-                return res.status(400).json({message: error.details[0].message})
+                return next(ApiError.BadRequest('Not valid data', error.details[0].message))
             } 
             const { id } = req.params;
             const { name, color, description } = req.body;

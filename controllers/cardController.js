@@ -2,16 +2,18 @@ const db = require("../db");
 
 const cardService = require('../service/card-service')
 const { cardValidation } = require('../validation/card-validation')
+const ApiError = require('../exceptions/api-error');
+
 
 class CardController {
     async createCard(req, res, next) {
         try {
+            const { board_id, name, description, estimate, status, due_date, labels, card_id } = req.body
             const {error} = cardValidation(req.body)
             if (error){
-                return res.status(400).json({message: error.details[0].message})
+                return next(ApiError.BadRequest('Not valid data', error.details[0].message))
             } 
-            const { board_id, name, description, estimate, status, due_date, labels } = req.body
-            const card = await cardService.createCard(board_id, name, description, estimate, status, due_date, labels)
+            const card = await cardService.createCard(board_id, name, description, estimate, status, due_date, labels, card_id)
             res.status(201).send({
                 message: "Card added successfully!",
                 body: {
@@ -38,7 +40,7 @@ class CardController {
         try {
             const {error} = cardValidation(req.body)
             if (error){
-                return res.status(400).json({message: error.details[0].message})
+                return next(ApiError.BadRequest('Not valid data', error.details[0].message))
             } 
             const { id } = req.params;
             const { board_id, name, description, estimate, status, due_date, labels } = req.body;
