@@ -1,69 +1,61 @@
 const db = require("../db");
 
 const cardService = require('../service/card-service')
+const { cardValidation } = require('../validation/card-validation')
+
 class CardController {
-    async createCard(req, res) {
+    async createCard(req, res, next) {
         try {
-            const { board_id, name, description, create_at, status, due_date, labels } = req.body
-            const card = await cardService.createCard(board_id, name, description, create_at, status, due_date, labels)
+            const {error} = cardValidation(req.body)
+            if (error){
+                return res.status(400).json({message: error.details[0].message})
+            } 
+            const { board_id, name, description, estimate, status, due_date, labels } = req.body
+            const card = await cardService.createCard(board_id, name, description, estimate, status, due_date, labels)
             res.status(201).send({
                 message: "Card added successfully!",
                 body: {
-                    card: { board_id, name, description, create_at, status, due_date, labels },
+                    card: { board_id, name, description, estimate, status, due_date, labels },
                 },
             });
-        } catch (error) {
-            console.error('addCard', error);
-            res.status(500).send({
-                message: "Unexpected error"
-            });
+        } catch (e) {
+            next(e)
         }
 
     };
 
-    async findCardById(req, res) {
+    async findCardById(req, res, next) {
         try {
             const { id } = req.params;
             const card = await cardService.findCardById(id)
             res.status(200).send(card[0]);
-        } catch (error) {
-            console.error('findCardById', error);
-            if (error == 'card_not_found') {
-                res.status(404).send({
-                    message: "Card not found."
-                });
-            } else {
-                res.status(500).send({
-                    message: "Unexpected error"
-                });
-            }
+        } catch (e) {
+            next(e)
         }
     };
 
-    async updateCardById(req, res) {
+    async updateCardById(req, res, next) {
         try {
+            const {error} = cardValidation(req.body)
+            if (error){
+                return res.status(400).json({message: error.details[0].message})
+            } 
             const { id } = req.params;
-            const { board_id, name, description, create_at, status, due_date, labels } = req.body;
-            const card = await cardService.updateCardById(board_id, name, description, create_at, status, due_date, labels, id)
+            const { board_id, name, description, estimate, status, due_date, labels } = req.body;
+            const card = await cardService.updateCardById(board_id, name, description, estimate, status, due_date, labels, id)
             res.status(200).send({ message: "Card Updated Successfully!" });
-        } catch (error) {
-            console.error('updateCardById', error);
-            res.status(500).send({
-                message: "Unexpected error"
-            });
+        } catch (e) {
+            next(e)
         }
     };
 
-    async deleteCardById(req, res) {
+    async deleteCardById(req, res, next) {
         try {
             const { id } = req.params;
             const card = await cardService.deleteCardById(id)
             res.status(200).send({ message: "Card deleted successfully!" });
-        } catch (error) {
-            console.error('deleteCardById', error);
-            res.status(500).send({
-                message: "Unexpected error"
-            });
+        } catch (e) {
+            next(e)
         }
     }
 }
