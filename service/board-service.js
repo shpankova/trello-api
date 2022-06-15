@@ -1,12 +1,14 @@
 const db = require("../db");
 
-const {createBoard, findBoardById, updateBoardById, deleteBoardById} = require('../query/board-query')
+const { createBoard, findBoardById, updateBoardById, deleteBoardById } = require('../query/board-query')
+const ApiError = require('../exceptions/api-error');
 
 
 class BoardService {
-    async createBoard(name, color, description, create_at) {
+    async createBoard(name, color, description) {
+
         const { rows } = await db.query(createBoard,
-            [ name, color, description, create_at]
+            [name, color, description]
         );
         return rows
     }
@@ -16,9 +18,9 @@ class BoardService {
         return rows
     }
 
-    async updateBoardById(name, color, description, create_at, id) {
+    async updateBoardById(name, color, description, id) {
         const { rows } = await db.query(updateBoardById,
-            [name, color, description, create_at, id]
+            [name, color, description, id]
         );
         return rows
     }
