@@ -2,9 +2,10 @@ const Router = require('express').Router;
 const router = new Router()
 const controller = require("../controllers/cardController")
 
-router.post('/createcard', controller.createCard);
+
+router.post('/card', controller.createCard);
 router.get('/card/:id', controller.findCardById);
-router.put('/updatecard/:id', controller.updateCardById)
-router.delete('/deletecard/:id', controller.deleteCardById);
+router.put('/card/:id', controller.updateCardById)
+router.delete('/card/:id', controller.deleteCardById);
 
 module.exports = router;

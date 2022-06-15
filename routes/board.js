@@ -3,9 +3,9 @@ const router = new Router()
 const controller = require("../controllers/boardController")
 const roleMiddleware = require('../middlewares/roles-middleware')
 
-router.post('/createboard', roleMiddleware(["admin"]), controller.createBoard);
+router.post('/board', roleMiddleware(["admin"]), controller.createBoard);
 router.get('/board/:id', controller.findBoardById);
-router.put('/updateboard/:id', roleMiddleware(["admin"]), controller.updateBoardById)
-router.delete('/deleteboard/:id', roleMiddleware(["admin"]), controller.deleteBoardById);
+router.put('/board/:id', roleMiddleware(["admin"]), controller.updateBoardById)
+router.delete('/board/:id', roleMiddleware(["admin"]), controller.deleteBoardById);
 
 module.exports = router;
