@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS "TrelloSchema"."board"
     "name" text NOT NULL,
 	"color" text NOT NULL,
     "description" text NOT NULL,
-    "create_at" timestamp without time zone NOT NULL
+    "created_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS "TrelloSchema"."card"
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS "TrelloSchema"."card"
     "board_id" integer NOT NULL,
     "name" text NOT NULL,
     "description" text NOT NULL,
-    "create_at" timestamp without time zone NOT NULL,
+    "created_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     "estimate" text,
     "status" text NOT NULL,
     "due_date" timestamp without time zone NOT NULL,
