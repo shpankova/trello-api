@@ -20,6 +20,9 @@ class CardService {
 
     async findCardById(id) {
         const { rows } = await db.query(findCardById, [id]);
+        if (!rows.length) {
+            throw ApiError.BadRequest('Nothing was found')
+        }
         return rows
     }
 
