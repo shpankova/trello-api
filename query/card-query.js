@@ -21,12 +21,13 @@ const findCardById = `
         card_id = $1`;
 
 const findCard = `
-SELECT EXISTS ( SELECT 1
-FROM 
-    "TrelloSchema"."card" 
-WHERE 
-"TrelloSchema"."card"."name" = $1)`;
-    
+    SELECT EXISTS ( 
+    SELECT 1
+    FROM 
+        "TrelloSchema"."card" 
+    WHERE 
+        card_id = $1)`;
+
 
 
 const updateCardById = `
