@@ -1,13 +1,10 @@
-const db = require("../db");
+const boardService = require('../service/board-service')
 
 class BoardController {
     async createBoard(req, res) {
         try {
             const { name, color, description, create_at } = req.body
-            const { rows } = await db.query(
-                `INSERT INTO "TrelloSchema"."board" ( name, color, description, create_at) VALUES ($1, $2, $3, $4)`,
-                [ name, color, description, create_at]
-            );
+            const board = await boardService.createBoard(name, color, description, create_at)
             res.status(201).send({
                 message: "Board added successfully!",
                 body: {
@@ -26,14 +23,9 @@ class BoardController {
     async findBoardById(req, res) {
         try {
             const { id } = req.params;
-            const { rows } = await db.query(`SELECT *
-            FROM "TrelloSchema"."board" JOIN "TrelloSchema"."card" ON "TrelloSchema"."board"."board_id"="TrelloSchema"."card"."board_id" WHERE "TrelloSchema"."board"."board_id" = $1  `,
-                [id]
-            );
-            if (!rows.length) {
-                throw 'board_not_found';
-            }
-            res.status(200).send(rows);
+            const board = await boardService.findBoardById(id)
+            return res.json(board)
+            // res.status(200).send(JSON.parse(board));
         } catch (error) {
             console.error('findBoardById', error);
             if (error == 'board_not_found') {
@@ -52,14 +44,7 @@ class BoardController {
         try {
             const { id } = req.params;
             const { name, color, description, create_at } = req.body;
-            const { rows } = await db.query(`UPDATE "TrelloSchema"."board" 
-                                          SET name = $1, 
-                                          color = $2,
-                                          description = $3, 
-                                          create_at = $4, 
-                                          WHERE board_id = $7`,
-                [name, color, description, create_at, id]
-            );
+            const board = await boardService.updateBoardById(name, color, description, create_at, id)
             res.status(200).send({ message: "Board Updated Successfully!" });
         } catch (error) {
             console.error('updateBoardById', error);
@@ -72,7 +57,7 @@ class BoardController {
     async deleteBoardById(req, res) {
         try {
             const { id } = req.params;
-            await db.query(`DELETE FROM "TrelloSchema"."board" WHERE board_id = $1`, [id]);
+            const board = await boardService.deleteBoardById(id)
             res.status(200).send({ message: "Board deleted successfully!" });
         } catch (error) {
             console.error('deleteBoardById', error);
