@@ -11,7 +11,7 @@ const findCardById = `
         board_id,
         name, 
         description,
-        create_at,
+        created_at,
         status,
         due_date,
         labels
