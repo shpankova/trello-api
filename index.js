@@ -8,15 +8,15 @@ const routerBoard = require('./routes/board')
 const errorMiddleware = require('./middlewares/error-middleware')
 
 
-const PORT = process.env.PORT || 7000;
-const HOST = process.env.HOST || '127.0.0.1';
+const PORT = process.env.PORT || 8000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 const app = express();
 
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }))
-app.use('/api/card', routerCard)
-app.use('/api/board', routerBoard)
+app.use('/api', routerCard)
+app.use('/api', routerBoard)
 
 app.use(helmet())
 app.use(errorMiddleware)
