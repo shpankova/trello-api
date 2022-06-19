@@ -1,6 +1,21 @@
 version: "3.0"
 
 services:
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=61665786
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=trello-api
+    ports: 
+      - ${POSTGRES_PORT:-5432}:5432
+    tty: true
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+    restart: always
   main:
     container_name: main
     build:
@@ -13,25 +28,34 @@ services:
     ports: 
       - 8000:8000
       - 9229:9229
-    command: npm run start:dev
+    environment:
+      - DB_HOST=postgres
+    command: npm run start
     depends_on: 
       - postgres
     restart: always
-  postgres:
-    container_name: postgres
-    image: postgres:14
-    env_file:
+    links:
+      - postgres
+  migration:
+    build:
+      context: .
+    command:
+      [
+        "./wait-for-it/wait-for-it.sh",
+        "postgres:5432",
+        "--",
+        "npm",
+        "run",
+        "migrate"
+      ]
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    env_file: 
       - .env
     environment:
-      - POSTGRES_PASSWORD=61665786
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=trello-api
-    ports: 
-      - ${POSTGRES_PORT:-5432}:5432
-    volumes: 
-      - pgdata:/var/lib/postgresql/data
-    restart: always
-    network_mode: host
+      - DB_HOST=postgres
 
 volumes: 
-  pgdata:
+  pgdata: null
