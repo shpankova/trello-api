@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon server.js",
     "migrate": "./node_modules/.bin/db-migrate up",
     "start:debug": "node --inspect index.js",
-    "test": "jest"
+    "test": "jest --testTimeout=5000"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,8 @@
     "joi": "^17.6.0",
     "nodemon": "^2.0.16",
     "pg": "^8.7.3",
-    "randomstring": "^1.2.2"
+    "randomstring": "^1.2.2",
+    "supertest": "^6.2.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.27.1",
