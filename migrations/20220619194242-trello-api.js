@@ -19,33 +19,21 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  var filePath = path.join(__dirname, 'sqls', '20220619194242-trello-api-up.sql');
-  return new Promise( function( resolve, reject ) {
-    fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
-      if (err) return reject(err);
-      console.log('received data: ' + data);
-
-      resolve(data);
-    });
-  })
-  .then(function(data) {
-    return db.runSql(data);
+    return db.createTable('board', {
+    columns: {
+      board_id: { type: 'int', primaryKey: true, autoIncrement: true },
+      name: { type: 'text', notNull: true, },
+      color: { type: 'text', notNull: true, },
+      description: { type: 'text', notNull: true, },
+      created_at: { type: 'datetime', defaultValue: new String('CURRENT_TIMESTAMP'), notNull: true },
+    },
+    ifNotExists: true
   });
+
 };
 
 exports.down = function(db) {
-  var filePath = path.join(__dirname, 'sqls', '20220619194242-trello-api-down.sql');
-  return new Promise( function( resolve, reject ) {
-    fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
-      if (err) return reject(err);
-      console.log('received data: ' + data);
-
-      resolve(data);
-    });
-  })
-  .then(function(data) {
-    return db.runSql(data);
-  });
+    return db.dropTable('board');
 };
 
 exports._meta = {
