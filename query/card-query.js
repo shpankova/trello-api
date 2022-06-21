@@ -1,6 +1,6 @@
 const createCard = `
     INSERT INTO 
-        "TrelloSchema"."card" 
+        "card" 
         ( board_id, name, description, estimate, status, due_date, labels) 
     VALUES 
         ($1, $2, $3, $4, $5, $6, $7)`;
@@ -16,7 +16,7 @@ const findCardById = `
         due_date,
         labels
     FROM 
-        "TrelloSchema"."card" 
+        "card" 
     WHERE 
         card_id = $1`;
 
@@ -24,7 +24,7 @@ const findCard = `
     SELECT EXISTS ( 
     SELECT 1
     FROM 
-        "TrelloSchema"."card" 
+        "card" 
     WHERE 
         card_id = $1)`;
 
@@ -32,7 +32,7 @@ const findCard = `
 
 const updateCardById = `
     UPDATE 
-        "TrelloSchema"."card" 
+        "card" 
     SET 
         board_id =$1,
         name = $2, 
@@ -46,7 +46,7 @@ const updateCardById = `
 
 const deleteCardById = `
     DELETE FROM 
-        "TrelloSchema"."card" 
+        "card" 
     WHERE 
         card_id = $1`;
 

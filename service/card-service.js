@@ -6,6 +6,7 @@ const ApiError = require('../exceptions/api-error');
 
 class CardService {
     async createCard(board_id, name, description, estimate, status, due_date, labels, card_id) {
+        
         const card = await db.query( findCard,
             [card_id]
         );
@@ -15,6 +16,7 @@ class CardService {
         const { rows } = await db.query( createCard,
             [board_id, name, description, estimate, status, due_date, labels]
         );
+
         return rows
     }
 

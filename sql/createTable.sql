@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS "TrelloSchema"."card"
     "status" text NOT NULL,
     "due_date" timestamp without time zone NOT NULL,
     labels text NOT NULL,
-    FOREIGN KEY (board_id) REFERENCES "TrelloSchema"."board" (board_id)
+    FOREIGN KEY (board_id) REFERENCES "TrelloSchema"."board" (board_id) ON DELETE CASCADE
 );
+
 

@@ -9,10 +9,11 @@ class CardController {
     async createCard(req, res, next) {
         try {
             const { board_id, name, description, estimate, status, due_date, labels, card_id } = req.body
-            const {error} = cardValidation(req.body)
-            if (error){
+            const { error } = cardValidation(req.body)
+            if (error) {
                 return next(ApiError.BadRequest('Not valid data', error.details[0].message))
-            } 
+            }
+            
             const card = await cardService.createCard(board_id, name, description, estimate, status, due_date, labels, card_id)
             res.status(201).send({
                 message: "Card added successfully!",
@@ -38,10 +39,10 @@ class CardController {
 
     async updateCardById(req, res, next) {
         try {
-            const {error} = cardValidation(req.body)
-            if (error){
+            const { error } = cardValidation(req.body)
+            if (error) {
                 return next(ApiError.BadRequest('Not valid data', error.details[0].message))
-            } 
+            }
             const { id } = req.params;
             const { board_id, name, description, estimate, status, due_date, labels } = req.body;
             const card = await cardService.updateCardById(board_id, name, description, estimate, status, due_date, labels, id)

@@ -1,33 +1,33 @@
 const createBoard = `
     INSERT INTO
-        "TrelloSchema"."board" 
+        "board" 
         ( name, color, description ) 
     VALUES 
         ($1, $2, $3)`;
 
 const findBoardById = `
     SELECT 
-        "TrelloSchema"."board"."board_id",
-        "TrelloSchema"."board"."name" AS "board_name",
-        "TrelloSchema"."board"."color" AS "board_color",
-        "TrelloSchema"."board"."description" AS "board_description",
-        "TrelloSchema"."board"."created_at" AS "board_created_at",
-        "TrelloSchema"."card"."card_id",
-        "TrelloSchema"."card"."name" AS "card_name",
-        "TrelloSchema"."card"."description" AS "card_description",
-        "TrelloSchema"."card"."created_at" AS "card_created_at",
-        "TrelloSchema"."card"."estimate" AS "card_estimate",
-        "TrelloSchema"."card"."status" AS "card_status",
-        "TrelloSchema"."card"."due_date" AS "card_due_date",
-        "TrelloSchema"."card"."labels" AS "card_labels"
+        "board"."board_id",
+        "board"."name" AS "board_name",
+        "board"."color" AS "board_color",
+        "board"."description" AS "board_description",
+        "board"."created_at" AS "board_created_at",
+        "card"."card_id",
+        "card"."name" AS "card_name",
+        "card"."description" AS "card_description",
+        "card"."created_at" AS "card_created_at",
+        "card"."estimate" AS "card_estimate",
+        "card"."status" AS "card_status",
+        "card"."due_date" AS "card_due_date",
+        "card"."labels" AS "card_labels"
     FROM 
-        "TrelloSchema"."board" 
+        "board" 
     JOIN 
-        "TrelloSchema"."card" 
+        "card" 
     ON 
-        "TrelloSchema"."board"."board_id"="TrelloSchema"."card"."board_id" 
+        "board"."board_id"="card"."board_id" 
     WHERE 
-        "TrelloSchema"."board"."board_id" = $1  `;
+        "board"."board_id" = $1  `;
 
 
 
@@ -35,13 +35,13 @@ const findBoard = `
     SELECT EXISTS ( 
     SELECT 1
     FROM 
-        "TrelloSchema"."board" 
+        "board" 
     WHERE 
         board_id = $1)`;
 
 
 const updateBoardById = `
-    UPDATE "TrelloSchema"."board" 
+    UPDATE "board" 
     SET 
         name = $1, 
         color = $2,
@@ -51,9 +51,9 @@ const updateBoardById = `
 
 const deleteBoardById = `
     DELETE FROM 
-        "TrelloSchema"."board" 
+        "board" 
     WHERE 
         board_id = $1`;
 
 
-module.exports = {createBoard, findBoardById, updateBoardById, deleteBoardById, findBoard};
+module.exports = { createBoard, findBoardById, updateBoardById, deleteBoardById, findBoard };

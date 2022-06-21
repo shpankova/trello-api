@@ -1,10 +1,10 @@
 {
-    "dev": {
-      "driver": "pg",
-      "user": "postgres",
-      "password": "61665786",
-      "host": "localhost",
-      "database": "trello-api",
-      "port": "5432"
-    }
+  "dev": {
+    "driver": "pg",
+    "user": "postgres",
+    "password": "61665786",
+    "host": "postgres",
+    "database": "trello-api",
+    "port": "5432"
   }
+}
