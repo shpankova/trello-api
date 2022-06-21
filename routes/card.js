@@ -3,9 +3,9 @@ const router = new Router()
 const controller = require("../controllers/cardController")
 
 
-router.post('/card', controller.createCard);
-router.get('/card/:id', controller.findCardById);
-router.put('/card/:id', controller.updateCardById)
-router.delete('/card/:id', controller.deleteCardById);
+router.post('/cards', controller.createCard);
+router.get('/cards/:id', controller.findCardById);
+router.put('/cards/:id', controller.updateCardById)
+router.delete('/cards/:id', controller.deleteCardById);
 
 module.exports = router;
