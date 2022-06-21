@@ -37,10 +37,10 @@ describe('Board Endpoints', () => {
     expect(res.body).toHaveProperty('message');
   });
 
-
-
   it('should delete a board by id', async () => {
-    const res = await request.delete('/api/boards/7');
+    const res = await request
+    .delete('/api/boards/4')
+    .send({role: 'admin'});
     expect(res.statusCode).toEqual(200);
   });
 
