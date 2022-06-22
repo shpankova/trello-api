@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "dev": "set NODE_ENV=development&& nodemon server.js",
+    "prod":  "set NODE_ENV=production&& nodemon server.js",
     "migrate": "db-migrate up",
     "start:debug": "node --inspect index.js",
     "test": "jest --testTimeout=5000"
