@@ -2,11 +2,11 @@ require('dotenv').config()
 const Pool = require('pg').Pool;
 
 const pool = new Pool({
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
-    port: Number(process.env.POSTGRES_PORT),
+    user: "postgres",
+    host: "postgres",
+    database: "trello-api-docker",
+    password: "61665786",
+    port: 5432,
 });
 
 pool.on('connect', () => {

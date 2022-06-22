@@ -29,7 +29,8 @@ services:
       - 8000:8000
       - 9229:9229
     environment:
-      - DB_HOST=postgres
+      - DB_HOST=localhost
+      - DB_PORT=5432
     command: npm run start
     depends_on:
       - postgres
