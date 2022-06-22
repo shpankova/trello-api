@@ -3,7 +3,7 @@
     "driver": "pg",
     "user": "postgres",
     "password": "61665786",
-    "host": "postgres",
+    "host": "localhost",
     "database": "trello-api",
     "port": "5432"
   }
