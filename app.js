@@ -1,12 +1,9 @@
-require('dotenv').config()
 const express = require('express')
 const helmet = require('helmet')
-
 
 const routerCard = require('./routes/card')
 const routerBoard = require('./routes/board')
 const errorMiddleware = require('./middlewares/error-middleware')
-
 
 const app = express();
 
