@@ -1,6 +1,6 @@
 const createBoard = `
     INSERT INTO
-        "board" 
+        public.board
         ( name, color, description ) 
     VALUES 
         ($1, $2, $3)`;
@@ -35,7 +35,7 @@ const findBoard = `
     SELECT EXISTS ( 
     SELECT 1
     FROM 
-        "board" 
+        public.board     
     WHERE 
         board_id = $1)`;
 

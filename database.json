@@ -4,7 +4,7 @@
     "user": "postgres",
     "password": "61665786",
     "host": "localhost",
-    "database": "trello-api",
-    "port": "5432"
+    "database": "trello-api-docker",
+    "port": "5431"
   }
 }
